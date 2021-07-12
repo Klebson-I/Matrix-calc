@@ -68,6 +68,7 @@ function createMatrix(rows,cols,matrixNum){
             input.classList.add('matrix_input');
             col.id=`${j}col`;
             input.id=`${i}-${j}`;
+            input.placeholder="0";
             col.append(input);
             row.append(col);
         }
@@ -136,15 +137,30 @@ function getValuesFrom1Matrix(){
 
 let determinant;
 
+
+
+
+
 function evaluate1Matrix(matrix){
     if(OPERATION==='determinant'&&matrix1rows==3) {
         determinant = evaluateDeterminantOf3x3(matrix);
         console.log(determinant);
     }
-    else if(OPERATION==='determinant'&&matrix1rows==4){
+    else if(OPERATION==='determinant'&&matrix1rows>=4){
         determinant=evaluateDeterminantOf4x4(matrix);
+        console.log(determinant);
     }
+    // else if(OPERATION==='determinant'&&matrix1rows==5){
+    //     determinant=evaluateDeterminantOf5x5(matrix);
+    //     console.log(determinant);
+    // }
 }
+
+
+
+
+
+
 
 function evaluateDeterminantOf3x3(MATRIX){
     //przepisuje na 1 wymiarową
@@ -229,6 +245,25 @@ function evaluateDeterminantOf3x3(MATRIX){
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //TABLIC 2 wymiarowych nie można kopiować przez SPREAD!!!!!
 function evaluateDeterminantOf4x4(mat){
 
@@ -244,7 +279,7 @@ function evaluateDeterminantOf4x4(mat){
                 zeroCounter++;
             };
         });
-        maxZero=Arr.push(zeroCounter);
+        maxZeroArr.push(zeroCounter);
         zeroCounter=0;
     });
 
@@ -252,7 +287,7 @@ function evaluateDeterminantOf4x4(mat){
 
     const choosenRow=maxZeroArr.indexOf(Math.max(...maxZeroArr));
     
-    for(let i=0;i<4;i++){
+    for(let i=0;i<MATRIX.length;i++){
 
         let miniMatrix=MATRIX.map(element=>element.slice());
         let determinantComponent=0;
@@ -267,10 +302,103 @@ function evaluateDeterminantOf4x4(mat){
 
         miniMatrix[choosenRow].splice(0,MATRIX.length);
         let finalMatrix=miniMatrix.filter(element=>element.length!=0);
-        let final3x3MatrixDeterminant=evaluateDeterminantOf3x3(finalMatrix);
-        determinantComponent=algebraicComplement*final3x3MatrixDeterminant;
+
+        if(finalMatrix.length==3){
+            if(algebraicComplement!=0){
+                let final3x3MatrixDeterminant=evaluateDeterminantOf3x3(finalMatrix);
+            determinantComponent=algebraicComplement*final3x3MatrixDeterminant;
+            console.log(determinantComponent);
+            determinant+=determinantComponent;
+            }
+            else{
+                determinantComponent=0;
+                determinant+=determinantComponent;
+            }
+        
+        }
+        else{
+            if(algebraicComplement!=0){
+                let finalMatrixDeterminant=evaluateDeterminantOf4x4(finalMatrix);
+                determinantComponent=algebraicComplement*finalMatrixDeterminant;
+                console.log(determinantComponent);
+                determinant+=determinantComponent;
+            }
+            else{
+                determinantComponent=0;
+                determinant+=determinantComponent;
+                }
+            
+        }
+        
+    }
+    return determinant;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function evaluateDeterminantOf5x5(mat){
+
+    const MATRIX=mat.map(element=>element.slice());
+    const maxZeroArr=[];
+    let zeroCounter=0;
+    let determinant=0;
+
+    //znalezienie wiersza z największą liczbą zer
+    MATRIX.forEach((matrixArr)=>{
+        matrixArr.forEach((element)=>{
+            if(element==0){
+                zeroCounter++;
+            };
+        });
+        maxZeroArr.push(zeroCounter);
+        zeroCounter=0;
+    });
+
+    // pierwysz wiersz z najwieksza liczba zer
+
+    const choosenRow=maxZeroArr.indexOf(Math.max(...maxZeroArr));
+    
+    for(let i=0;i<MATRIX.length;i++){
+
+        let miniMatrix=MATRIX.map(element=>element.slice());
+        let determinantComponent=0;
+        
+        let algebraicComplement=parseFloat(parseFloat(MATRIX[choosenRow][i]))*((-1)**((choosenRow+1)+(i+1)));
+        if(algebraicComplement===-0)algebraicComplement=0;
+
+        
+        for(let j=0;j<MATRIX.length;j++){
+            miniMatrix[j].splice(i,1);
+        }
+
+        miniMatrix[choosenRow].splice(0,MATRIX.length);
+        let finalMatrix=miniMatrix.filter(element=>element.length!=0);
+
+        
+        let finalMartixDeterminant=evaluateDeterminantOf4x4(finalMatrix);
+        determinantComponent=algebraicComplement*finalMartixDeterminant;
         console.log(determinantComponent);
         determinant+=determinantComponent;
     }
-    console.log(determinant);
+    return determinant;
 };
