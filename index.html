@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>Matrix calculator</title>
+</head>
+<body>
+    <div class="pageHeader">
+        <h1 class="pageHeader__header">
+            Matrix calculator
+        </h1>
+    </div>
+
+    <div class="selectSection">
+        <h3 class="selectSection__header">
+            Select math operation :
+        </h3>
+
+        <select class="selectSection__select" data-select-operation>
+            <option value="determinant">Determinant of the matrix</option>
+            <option value="add">Add matrixes</option>
+            <option value="subtract">Subtract matrixes</option>
+            <option value="multiply">Multiply matrixes</option>
+            <option value="transposition">Transposition of matrix</option>
+        </select>
+    </div>
+
+    <div class="determineMatrix" data-determine-matrix-div>
+        <div class="determineMatrix__determineSize"data-determine-matrix-1-size>
+            <span class="matrix1div__span">
+                M1=
+            </span>
+            <input type="text" class="determineInput determineMatrix1Rows" data-determine-matrix-1-rows>
+            X
+            <input type="text" class="determineInput determineMatrix1Columns" data-determine-matrix-1-cols>
+        </div>
+
+        <div class="determineMatrix__determineSize"data-determine-matrix-2-size>
+            <span class="matrix2div__span">
+                M2=
+            </span>
+            <input type="text" class="determineInput determineMatrix2Rows" data-determine-matrix-2-rows>
+            X
+            <input type="text" class="determineInput determineMatrix2Columns" data-determine-matrix-2-cols>
+        </div>
+
+    </div>
+    <button class="sendButton1"data-send-button-1>Send</button>
+
+    <div class="choseValues" data-chose-matrix-values>
+
+    </div>
+    <button class="sendButton2" data-send-button-2>Evaluate</button>
+
+    <script src="./js/main.js" type="module"></script>
+</body>
+</html>
