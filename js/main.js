@@ -23,14 +23,18 @@ inputOperation.addEventListener('click',()=>{
     showDetermineMatrixSizeDiv(inputOperation.value);
 })
 sendButton1.addEventListener('click',()=>{
-    checkIfDetermined();
+    checkOperation();
 })
 sendButton2.addEventListener('click',()=>{
     getValuesToEvaluate(OPERATION);
 })
 
 
-function checkIfDetermined(){
+
+
+
+
+function checkOperation(){
     if(OPERATION==='determinant'&&
     matrix1ColsInput.value==matrix1RowsInput.value){
         let number=matrix1ColsInput.value;
@@ -38,9 +42,62 @@ function checkIfDetermined(){
         matrix1cols=matrix1ColsInput.value;
         createMatrix(number,number,1);
     }
-    else{
+    else if(OPERATION==='determinant'){
         alert('To evaluate determinant, number of columns and rows in matrix must equals !');
     }
+
+    if(OPERATION==='add'
+    &&matrix1ColsInput.value===matrix2ColsInput.value
+    &&matrix1RowsInput.value===matrix2RowsInput.value){
+        let numRow=matrix1RowsInput.value;
+        let numCol=matrix1ColsInput.value;
+        matrix2rows=matrix1RowsInput.value;
+        matrix2cols=matrix1ColsInput.value;
+        matrix1rows=matrix1RowsInput.value;
+        matrix1cols=matrix1ColsInput.value;
+        createMatrix(numRow,numCol,1);
+        createMatrix(numRow,numCol,2);
+    }
+    else if(OPERATION==='add'){
+        alert("Matrixis should have the same size");
+    }
+    if(OPERATION==='subtract'
+    &&matrix1ColsInput.value===matrix2ColsInput.value
+    &&matrix1RowsInput.value===matrix2RowsInput.value){
+        let numRow=matrix1RowsInput.value;
+        let numCol=matrix1ColsInput.value;
+        matrix2rows=matrix1RowsInput.value;
+        matrix2cols=matrix1ColsInput.value;
+        matrix1rows=matrix1RowsInput.value;
+        matrix1cols=matrix1ColsInput.value;
+        createMatrix(numRow,numCol,1);
+        createMatrix(numRow,numCol,2);
+    }
+    else if(OPERATION==='subtract'){
+        alert("Matrixis should have the same size");
+    }
+    if(OPERATION==='transposition'){
+        let cols=matrix1ColsInput.value;
+        let rows=matrix1RowsInput.value;
+        matrix1rows=matrix1RowsInput.value;
+        matrix1cols=matrix1ColsInput.value;
+        createMatrix(rows,cols,1);
+    }
+
+    if(OPERATION==='multiply'
+    &&matrix1ColsInput.value===matrix2RowsInput.value){
+        matrix1rows=matrix1RowsInput.value;
+        matrix1cols=matrix1ColsInput.value;
+        matrix2rows=matrix2RowsInput.value;
+        matrix2cols=matrix2ColsInput.value;
+
+        createMatrix(matrix1rows,matrix1cols,1);
+        createMatrix(matrix2rows,matrix2cols,2);
+    }
+    else if(OPERATION==='multiply'){
+        alert('Matrix 1 cols should be equal to Matrix 2 rows');
+    }
+
 }
 
 function createMatrix(rows,cols,matrixNum){
@@ -65,7 +122,8 @@ function createMatrix(rows,cols,matrixNum){
             const col=document.createElement('td');
             const input=document.createElement('input');
             col.classList.add('matrix_col');
-            input.classList.add('matrix_input');
+            input.classList.add(`matrix_input_${matrixNum}`);
+            input.classList.add(`matrix_input`);
             col.id=`${j}col`;
             input.id=`${i}-${j}`;
             input.placeholder="0";
@@ -113,10 +171,14 @@ function showDetermineMatrixSizeDiv(value){
 
 function getValuesToEvaluate(operation){
     if(operation==='determinant')getValuesFrom1Matrix();
+    if(operation==='add')getValuesFrom2Matrix();
+    if(operation==='subtract')getValuesFrom2Matrix();
+    if(operation==='transposition')getValuesFrom1Matrix();
+    if(operation==='multiply')getValuesFrom2Matrix();
 }
 
 function getValuesFrom1Matrix(){
-    const inputsArr=document.querySelectorAll('.matrix_input');
+    const inputsArr=document.querySelectorAll('.matrix_input_1');
     let rowsNum=matrix1rows;
     let colsNum=matrix1cols;
     var matrixArr=[];
@@ -135,7 +197,73 @@ function getValuesFrom1Matrix(){
     evaluate1Matrix(matrixArr);
 }
 
-let determinant;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function getValuesFrom2Matrix(){
+    const inputsArr=document.querySelectorAll('.matrix_input_1');
+    let rowsNum=matrix1rows;
+    let colsNum=matrix1cols;
+    let matrixArr1=[];
+    for(let i=1;i<=rowsNum;i++){
+        let miniArr=[];
+        for(let j=1;j<=colsNum;j++){
+            
+            inputsArr.forEach((element)=>{
+                if(element.id==`${i}-${j}`){
+                    miniArr[j-1]=element.value;
+                }
+            })
+        }
+        matrixArr1[i-1]=miniArr;
+    }
+    const inputsArr2=document.querySelectorAll('.matrix_input_2');
+    let rowsNum2=matrix2rows;
+    let colsNum2=matrix2cols;
+    let matrixArr2=[];
+    for(let i=1;i<=rowsNum2;i++){
+        let miniArr=[];
+        for(let j=1;j<=colsNum2;j++){
+            
+            inputsArr2.forEach((element)=>{
+                if(element.id==`${i}-${j}`){
+                    miniArr[j-1]=element.value;
+                }
+            })
+        }
+        matrixArr2[i-1]=miniArr;
+    }
+    evaluate2Matrix(matrixArr1,matrixArr2);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -143,18 +271,215 @@ let determinant;
 
 function evaluate1Matrix(matrix){
     if(OPERATION==='determinant'&&matrix1rows==3) {
-        determinant = evaluateDeterminantOf3x3(matrix);
+        let determinant = evaluateDeterminantOf3x3(matrix);
         console.log(determinant);
     }
     else if(OPERATION==='determinant'&&matrix1rows>=4){
-        determinant=evaluateDeterminantOf4x4(matrix);
+        let determinant=evaluateDeterminantOf4x4(matrix);
         console.log(determinant);
     }
-    // else if(OPERATION==='determinant'&&matrix1rows==5){
-    //     determinant=evaluateDeterminantOf5x5(matrix);
-    //     console.log(determinant);
-    // }
+    if(OPERATION==='transposition'){
+        let transpositionMatrix=evaluateTransposition(matrix);
+        console.log(transpositionMatrix);
+    }
 }
+
+function evaluate2Matrix(matrix1,matrix2){
+    if(OPERATION==='add'){
+        let sum=sumMatrices(matrix1,matrix2);
+        console.log(sum);
+    }
+    if(OPERATION==='subtract'){
+        let subtract=subtractMatrices(matrix1,matrix2);
+        console.log(subtract);
+    }
+    if(OPERATION==='multiply'){
+        console.log('zacznij');
+        let multiply=multiplyMatrices(matrix1,matrix2);
+        console.log(multiply);
+    }
+}
+
+
+function sumMatrices(matrix1,matrix2){
+    let finalMatrix=[];
+    for(let i=0;i<matrix1rows;i++){
+        let miniArr=[];
+        for(let j=0;j<matrix1cols;j++){
+            let x=parseFloat(matrix1[i][j])+parseFloat(matrix2[i][j]);
+            miniArr.push(x);
+        }
+        finalMatrix.push(miniArr);
+    }
+    return finalMatrix;
+}
+
+function subtractMatrices(matrix1,matrix2){
+    let finalMatrix=[];
+    for(let i=0;i<matrix1rows;i++){
+        let miniArr=[];
+        for(let j=0;j<matrix1cols;j++){
+            let x=parseFloat(matrix1[i][j])-parseFloat(matrix2[i][j]);
+            miniArr.push(x);
+        }
+        finalMatrix.push(miniArr);
+    }
+    return finalMatrix;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//działa tylko w jedną strone a mnożenie macierzy nie jest przemienne !!! trzeba poprawic
+function multiplyMatrices(matrix11,matrix22){
+    let matrix1=matrix11.map(elem=>elem.slice());
+    let matrix2=matrix22.map(elem=>elem.slice());
+
+    const multiplyIfColsOverRows=()=>{
+        let whichMatrixCols = [];
+        for (let i = 0; i < matrix2cols; i++) {
+            let miniArr = [];
+            for (let j = 0; j < matrix2rows; j++) {
+                miniArr.push(matrix2[j][i]);
+            }
+            whichMatrixCols.push(miniArr);
+        }
+        let finalMatrix = [];
+        console.log(matrix1);
+        console.log(matrix2);
+        console.log(whichMatrixCols);
+
+        for (let i = 0; i < matrix1.length; i++) {
+            let miniArr = [];
+            for (let j = 0; j < whichMatrixCols.length; j++) {
+                let miniMiniArr = [];
+                for (let k = 0; k < matrix1[0].length; k++) {
+                    let x = matrix1[i][k] * whichMatrixCols[j][k];
+                    miniMiniArr.push(x);
+                    console.log(x);
+                }
+                let z = miniMiniArr.reduce((a, b) => a + b);
+                miniArr.push(z);
+            }
+            finalMatrix.push(miniArr);
+        }
+
+        console.log(finalMatrix)
+    }
+
+    const multiplyIfRowsOverCols=()=>{
+        let whichMatrixCols = [];
+        for (let i = 0; i < matrix1cols; i++) {
+            let miniArr = [];
+            for (let j = 0; j < matrix1rows; j++) {
+                miniArr.push(matrix1[j][i]);
+            }
+            whichMatrixCols.push(miniArr);
+        }
+        let finalMatrix = [];
+        for (let i = 0; i < whichMatrixCols.length; i++) {
+            let miniArr = [];
+            for (let j = 0; j < matrix2.length; j++) {
+                let miniMiniArr = [];
+                for (let k = 0; k < whichMatrixCols[0].length; k++) {
+                    let x = matrix2[i][k] * whichMatrixCols[j][k];
+                    miniMiniArr.push(x);
+                    console.log(x);
+                }
+                let z = miniMiniArr.reduce((a, b) => a + b);
+                miniArr.push(z);
+            }
+            finalMatrix.push(miniArr);
+        }
+
+        console.log(finalMatrix)
+    }
+    
+    if(matrix1cols>matrix1rows){
+        multiplyIfColsOverRows();
+    }
+    else{
+        multiplyIfRowsOverCols();
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+function evaluateTransposition(matrix){
+    let finalMatrix=[];
+    
+    for(let i=0;i<matrix1cols;i++){
+        let miniArr=[];
+        for(let j=0;j<matrix1rows;j++){
+            miniArr.push(matrix[j][i]);
+        }
+        finalMatrix.push(miniArr);
+    }
+
+    return finalMatrix;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
