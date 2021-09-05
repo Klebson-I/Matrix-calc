@@ -15,8 +15,6 @@ body{
     flex-direction: column;
     font-family: 'Press Start 2P', cursive;
     width: 100vw;
-    height: 100vh;
-    overflow-x: hidden;
 }
 
 .pageHeader{
@@ -116,4 +114,88 @@ body{
     background-color: blanchedalmond;
     display: none;
     padding: 5px;
+}
+.resetButton{
+    width: 200px;
+    height: 50px;
+    font-size: 25px;
+    margin-top: 15px;
+    font-family: 'Press Start 2P', cursive;
+    background-color: blanchedalmond;
+    display: none;
+    padding: 5px;
+}
+.buttonsDiv{
+    display: flex;
+    width: 50%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.resultDiv{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    min-width: 50%;
+    min-height: 20vh;
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+.oneNum{
+    min-width: 30px;
+    min-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.resultMatrix{
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.resultsMiniArr{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.infoDiv{
+    width: 400px;
+    height: 150px;
+    background:linear-gradient(to top,rgb(53, 73, 161),rgb(64, 175, 177));
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.9;
+    border-radius: 5px;
+    display: none;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.infoDiv__span{
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+.infoDiv__close{
+    position: absolute;
+    top: 0;
+    left: 100%;
+    transform: translateX(-100%);
+    width: 25px;
+    height: 25px;
+    font-size: 20px;
+    background:linear-gradient(to bottom,rgb(53, 73, 161),rgb(64, 175, 177));
+}
+.infoDiv__close:hover{
+    background:linear-gradient(to bottom,rgb(44, 61, 138),rgb(50, 138, 139));
+    cursor: pointer;
+}
+
+@media(max-width:900px){
+    .choseValues{
+        flex-direction: column;
+    }
 }

@@ -6,9 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
     <title>Matrix calculator</title>
 </head>
 <body>
+
+    <div class="infoDiv" data-info-div>
+        <h2 class="infoDiv__header">
+            Error
+        </h2>
+        <span class="infoDiv__span" data-info-span>
+            Błąd, jedna z macierzy nie istnieje !
+        </span>
+        <button class="infoDiv__close" data-close-info-button>
+            X
+        </button>
+    </div>
+
     <div class="pageHeader">
         <h1 class="pageHeader__header">
             Matrix calculator
@@ -54,7 +68,16 @@
     <div class="choseValues" data-chose-matrix-values>
 
     </div>
-    <button class="sendButton2" data-send-button-2>Evaluate</button>
+
+    <div class="buttonsDiv">
+        <button class="sendButton2" data-send-button-2>Evaluate</button>
+        <button class="resetButton" data-reset-button>Reset</button>
+    </div>
+
+    <div class="resultDiv" data-result-div>
+
+    </div>
+    
 
     <script src="./js/main.js" type="module"></script>
 </body>
